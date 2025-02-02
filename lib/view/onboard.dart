@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../component/appbar.dart';
-import '../component/button.dart';
-import '../component/myText.dart';
 import '../route/pageroute.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -146,20 +143,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, RoutePath.login);
                 },
-                child: MyText(
-                  label: "Get Started",
-                  fontSize: 16,
-                  fontColor: Colors.white,
+                child: Text(
+                    "Get Started",
+                  style: TextStyle(  fontSize: 16,
+                    color: Colors.white,),
                 ),
               ),
             )
                 : Center(
               child: ElevatedButton(
                 onPressed: _nextPage,
-                child: MyText(
-                  label: "Next",
-                  fontSize: 16,
-                  fontColor: Colors.white,
+                child: Text(
+                    "Next",
+                style: TextStyle(  fontSize: 16,
+                  color: Colors.white,),
                 ),
               ),
             ),

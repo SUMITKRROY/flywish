@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../utils/image.dart';
-import '../component/appbar.dart';
-import '../component/button.dart';
 import '../component/myTextForm.dart';
 import '../provider/login/login_bloc.dart';
 import '../route/pageroute.dart';

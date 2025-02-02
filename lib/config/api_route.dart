@@ -1,8 +1,7 @@
 //import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiRoute {
-  //Base Url
-  // static String? baseurl = dotenv.env["apiBaseUrl"];
+
   static String? baseurl = "http://localhost:8883/api/v1/user";
   String login = "$baseurl/loginWithPhone";
   String logout = "$baseurl/logout";
