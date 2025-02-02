@@ -1,0 +1,147 @@
+{
+"en": {
+"questions": [
+{
+"id": "uuid1",
+"question": "Registration: Name + Mobile no = OTP generation",
+"options": []
+},
+{
+"id": "uuid2",
+"question": "Welcome to the portal",
+"options": []
+},
+{
+"id": "uuid3",
+"question": "Demographic profile: Age",
+"options": []
+},
+{
+"id": "uuid4",
+"question": "Demographic profile: Sex",
+"options": [
+{
+"id": "uuid4-1",
+"option": "Male"
+},
+{
+"id": "uuid4-2",
+"option": "Female"
+},
+{
+"id": "uuid4-3",
+"option": "Transgender"
+}
+]
+},
+{
+"id": "uuid5",
+"question": "Demographic profile: Address",
+"options": []
+},
+{
+"id": "uuid6",
+"question": "Demographic profile: State",
+"options": []
+},
+{
+"id": "uuid7",
+"question": "Educational qualification",
+"options": [
+{
+"id": "uuid7-1",
+"option": "Below 10th"
+},
+{
+"id": "uuid7-2",
+"option": "Between 10th to 12th"
+},
+{
+"id": "uuid7-3",
+"option": "Graduate"
+}
+]
+},
+{
+"id": "uuid8",
+"question": "Socioeconomic status",
+"options": [
+{
+"id": "uuid8-1",
+"option": "Poor"
+},
+{
+"id": "uuid8-2",
+"option": "Lower middle"
+},
+{
+"id": "uuid8-3",
+"option": "Middle"
+},
+{
+"id": "uuid8-4",
+"option": "Upper middle"
+},
+{
+"id": "uuid8-5",
+"option": "Rich"
+},
+{
+"id": "uuid8-6",
+"option": "Very Rich"
+}
+]
+},
+{
+"id": "uuid9",
+"question": "Height, Weight, BMI",
+"options": []
+},
+{
+"id": "uuid10",
+"question": "Urban, Rural, Village/Remote setting, Metros",
+"options": [
+{
+"id": "uuid10-1",
+"option": "Urban"
+},
+{
+"id": "uuid10-2",
+"option": "Rural"
+},
+{
+"id": "uuid10-3",
+"option": "Village/Remote setting"
+},
+{
+"id": "uuid10-4",
+"option": "Metros"
+}
+]
+},
+{
+"id": "uuid11",
+"question": "Dietary preference",
+"options": [
+{
+"id": "uuid11-1",
+"option": "Vegetarian"
+},
+{
+"id": "uuid11-2",
+"option": "Non-vegetarian"
+},
+{
+"id": "uuid11-3",
+"option": "Strict Jain"
+}
+]
+},
+{
+"id": "uuid12",
+"question": "Smoking, Alcohol, Drugs (if any)",
+"options": []
+}
+]
+}
+}
