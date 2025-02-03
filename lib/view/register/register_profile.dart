@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../component/myTextForm.dart';
 import '../../config/share_pref.dart';
 import '../../utils/utils.dart';

@@ -22,10 +22,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
 
         final response = await LoginRepo().getLogin(event.email, event.password);
-        print("responce ${response.data}");
+        print("response ${response.data['data']['token']}");
         if (response.statusCode == 200) {
-          String accessToken = response.data['accessToken']; // Extract the token
-          storeAccessToken(accessToken);
+          String accessToken = response.data['data']['token']; // Extract the token
+          await storeAccessToken(accessToken);
           emit(LoginSuccess(response.data));
         } else {
           emit(LoginFailure(response.statusMessage ?? 'Unknown error'));
