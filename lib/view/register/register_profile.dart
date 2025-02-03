@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dually/provider/register/register_bloc.dart';
+import 'package:dually/provider/register/register_bloc.dart';
 import 'package:dually/route/pageroute.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../component/myTextForm.dart';
+import '../../config/share_pref.dart';
 import '../../utils/utils.dart';
 
 class ProfileRegisterScreen extends StatefulWidget {
@@ -28,42 +32,71 @@ class _ProfileRegisterScreenState extends State<ProfileRegisterScreen> {
   var isRemarkEnabled = true;
   var selfiImgBase64 = '';
   var selfiImg = '';
+  bool _isLoading = false;
+  String? token;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getTocken();
+  }
+  Future<void> getTocken() async {
+     token = await getAccessToken();
+    print("token  $token"); // Use the token for authentication or API calls
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: EdgeInsets.all(20.w),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 40.h),
-                Text(
-                  'Profile',
-                  style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 5.h),
-                Text(
-                  "Let's setup your profile",
-                  style: TextStyle(fontSize: 14.sp, color: Colors.grey),
-                ),
-                SizedBox(height: 20.h),
+      body: BlocListener<RegisterBloc, RegisterState>(
+        listener: (context, state) {
+          if (state is RegisterLoading) {
+            setState(() => _isLoading = true); // Show loading
+          } else {
+            setState(() => _isLoading = false); // Hide loading
+          }
 
-                _buildProfileImage(),
-                SizedBox(height: 30.h),
-                _buildNameField(),
-                SizedBox(height: 15.h),
-                _buildGenderDropdown(),
-                SizedBox(height: 15.h),
-                _buildAgeField(),
-                SizedBox(height: 15.h),
-                _buildBioField(),
-                SizedBox(height: 20.h),
-                _buildRegisterButton(),
-              ],
+          if (state is RegisterFailure) {
+            Utils.snackbarToast(state.error); // Display error message
+          } else if (state is RegisterSuccess) {
+            Navigator.pushReplacementNamed(context, RoutePath.homePage);
+          }
+        },
+
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: EdgeInsets.all(20.w),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 40.h),
+                  Text(
+                    'Profile',
+                    style: TextStyle(
+                        fontSize: 24.sp, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 5.h),
+                  Text(
+                    "Let's setup your profile",
+                    style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                  ),
+                  SizedBox(height: 20.h),
+
+                  _buildProfileImage(),
+                  SizedBox(height: 30.h),
+                  _buildNameField(),
+                  SizedBox(height: 15.h),
+                  _buildGenderDropdown(),
+                  SizedBox(height: 15.h),
+                  _buildAgeField(),
+                  SizedBox(height: 15.h),
+                  _buildBioField(),
+                  SizedBox(height: 20.h),
+                  _buildRegisterButton(),
+                ],
+              ),
             ),
           ),
         ),
@@ -72,7 +105,7 @@ class _ProfileRegisterScreenState extends State<ProfileRegisterScreen> {
   }
 
   Widget _buildProfileImage() {
-    return  _image == null
+    return _image == null
         ? GestureDetector(
       onTap: () {
         _showPicker(context);
@@ -100,7 +133,8 @@ class _ProfileRegisterScreenState extends State<ProfileRegisterScreen> {
   Widget _buildGenderDropdown() {
     return DropdownButtonFormField<String>(
       value: _selectedGender,
-      decoration: InputDecoration(labelText: 'Gender', filled: true, fillColor: Colors.grey[200]),
+      decoration: InputDecoration(
+          labelText: 'Gender', filled: true, fillColor: Colors.grey[200]),
       items: ['Male', 'Female', 'Other'].map((gender) {
         return DropdownMenuItem(value: gender, child: Text(gender));
       }).toList(),
@@ -128,6 +162,7 @@ class _ProfileRegisterScreenState extends State<ProfileRegisterScreen> {
       onChanged: (String) {},
     );
   }
+
   Widget _buildAgeField() {
     return MyTextForm(
       label: "Age",
@@ -151,7 +186,7 @@ class _ProfileRegisterScreenState extends State<ProfileRegisterScreen> {
       ],
       keyboardType: TextInputType.text,
       validator: true,
-maxline: 3,
+      maxline: 3,
       // prefix: const Icon(Icons.email_outlined,
       //   //color: Colors.black87
       // ), // Dark icon
@@ -160,17 +195,28 @@ maxline: 3,
   }
 
   Widget _buildRegisterButton() {
-    return ElevatedButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-       Navigator.pushReplacementNamed(context, RoutePath.login);
-        }
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      builder: (context, state) {
+        return ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              BlocProvider.of<RegisterBloc>(context).add(
+                RegisterUser(
+                   fullName: _nameController.text.toString(), gender: "", age: _ageController.text.toString(), bio: _bioController.text.toString(), token: token.toString(),
+                ),
+              );
+              Navigator.pushNamed(context, RoutePath.login);
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            minimumSize: Size(double.infinity, 50.h),
+          ),
+          child:  _isLoading
+              ? CircularProgressIndicator()
+              : Text('REGISTER', style: TextStyle(fontSize: 16.sp)),
+        );
       },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blue,
-        minimumSize: Size(double.infinity, 50.h),
-      ),
-      child: Text('REGISTER', style: TextStyle(fontSize: 16.sp)),
     );
   }
 
@@ -187,8 +233,8 @@ maxline: 3,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Wrap(children: [
-                  Text('Upload Image',
-                     textAlign: TextAlign.start),
+                Text('Upload Image',
+                    textAlign: TextAlign.start),
                 const SizedBox(
                   height: 50,
                 ),

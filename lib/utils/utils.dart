@@ -3,20 +3,21 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Utils {
   //dialog
-  // static showLoadingProgress(BuildContext context) {
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (context) => SpinKitCubeGrid(
-  //       color: Theme.of(context).secondaryHeaderColor,
-  //       size: 50,
-  //     ),
-  //   );
-  // }
+  static showLoadingProgress(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => SpinKitCubeGrid(
+        color: Theme.of(context).secondaryHeaderColor,
+        size: 50,
+      ),
+    );
+  }
 
   static showDialogBox({
     required BuildContext context,
